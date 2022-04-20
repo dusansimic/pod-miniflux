@@ -1,0 +1,13 @@
+---
+
+units_path: ~/.config/systemd/user
+
+pod_name: miniflux
+
+db_image: docker.io/library/postgres
+db_tag: 13.3-alpine
+db_volume: "{{ pod_name }}_db"
+db_container: "{{ pod_name }}_db"
+
+app_image: docker.io/miniflux/miniflux
+app_container: "{{ pod_name }}_app"

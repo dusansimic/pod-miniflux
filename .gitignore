@@ -1,0 +1,5 @@
+.vscode/
+
+ansible/main.yaml
+ansible/inventory.yaml
+ansible/secrets.yaml

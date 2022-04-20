@@ -1,0 +1,41 @@
+---
+
+- name: create systemd directory
+  ansible.builtin.file:
+    state: directory
+    path: "{{ units_path }}"
+    mode: 0755
+
+- name: create pod service
+  ansible.builtin.template:
+    src: pod.j2
+    dest: "{{ units_path }}/pod-miniflux.service"
+    mode: 0644
+    seuser: unconfined_u
+    serole: object_r
+    setype: systemd_unit_file_t
+  notify:
+    - enable pod service
+    - restart pod service
+
+- name: create db service
+  ansible.builtin.template:
+    src: db.j2
+    dest: "{{ units_path }}/container-miniflux_db.service"
+    mode: 0644
+    seuser: unconfined_u
+    serole: object_r
+    setype: systemd_unit_file_t
+  notify:
+    - restart pod service
+
+- name: create app service
+  ansible.builtin.template:
+    src: app.j2
+    dest: "{{ units_path }}/container-miniflux_app.service"
+    mode: 0644
+    seuser: unconfined_u
+    serole: object_r
+    setype: systemd_unit_file_t
+  notify:
+    - restart pod service

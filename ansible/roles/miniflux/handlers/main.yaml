@@ -1,0 +1,15 @@
+---
+
+- name: enable pod service
+  ansible.builtin.systemd:
+    name: pod-miniflux
+    daemon_reload: true
+    enabled: true
+    scope: user
+
+- name: restart pod service
+  ansible.builtin.systemd:
+    name: pod-miniflux
+    daemon_reload: true
+    scope: user
+    state: restarted
